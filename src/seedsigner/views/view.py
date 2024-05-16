@@ -3,9 +3,9 @@ from gettext import gettext as _
 from typing import Type
 
 from seedsigner.helpers.l10n import mark_for_translation as _mft
-from seedsigner.gui.components import SeedSignerIconConstants
+from seedsigner.gui.components import FontAwesomeIconConstants, SeedSignerIconConstants
 from seedsigner.gui.screens import RET_CODE__POWER_BUTTON, RET_CODE__BACK_BUTTON
-from seedsigner.gui.screens.screen import BaseScreen, ButtonOption, DireWarningScreen, LargeButtonScreen, PowerOffScreen, PowerOffNotRequiredScreen, ResetScreen, WarningScreen
+from seedsigner.gui.screens.screen import BaseScreen, ButtonOption, DireWarningScreen, LargeButtonScreen, PowerOffScreen, PowerOffNotRequiredScreen, QRDisplayScreen, ResetScreen, WarningScreen
 from seedsigner.models.settings import Settings, SettingsConstants
 from seedsigner.models.settings_definition import SettingsDefinition
 from seedsigner.models.threads import BaseThread
@@ -389,3 +389,46 @@ class OptionDisabledView(View):
             return Destination(SettingsEntryUpdateSelectionView, view_args=dict(attr_name=self.settings_attr), clear_history=True)
         else:
             return Destination(MainMenuView, clear_history=True)
+
+
+
+class RemoveMicroSDWarningView(View):
+    """
+        Warning to remove the microsd
+    """
+    def __init__(self, next_view: View):
+        super().__init__()
+        self.next_view = next_view
+
+    def run(self):
+        self.run_screen(
+            WarningScreen,
+            title="Security Tip",
+            status_icon_name=FontAwesomeIconConstants.SDCARD,
+            status_headline="",
+            text="For maximum security,\nremove the MicroSD card\nbefore continuing.",
+            show_back_button=False,
+            button_data=["Continue"],
+        )
+
+        return Destination(self.next_view, clear_history=True)
+
+
+
+class BaseQRDisplayView(View):
+    def get_qr_encoder(self):
+        raise Exception("Must implement in the child class")
+    
+    def get_next_destination(self):
+        raise Exception("Must implement in the child class")
+
+    def run(self):
+        selected_menu_button = self.run_screen(
+            QRDisplayScreen,
+            qr_encoder=self.get_qr_encoder(),
+        )
+
+        if selected_menu_button == RET_CODE__BACK_BUTTON:
+            return Destination(BackStackView)
+        
+        return self.get_next_destination()
