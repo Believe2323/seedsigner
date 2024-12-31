@@ -392,29 +392,6 @@ class OptionDisabledView(View):
 
 
 
-class RemoveMicroSDWarningView(View):
-    """
-        Warning to remove the microsd
-    """
-    def __init__(self, next_view: View):
-        super().__init__()
-        self.next_view = next_view
-
-    def run(self):
-        self.run_screen(
-            WarningScreen,
-            title="Security Tip",
-            status_icon_name=FontAwesomeIconConstants.SDCARD,
-            status_headline="",
-            text="For maximum security,\nremove the MicroSD card\nbefore continuing.",
-            show_back_button=False,
-            button_data=["Continue"],
-        )
-
-        return Destination(self.next_view, clear_history=True)
-
-
-
 class BaseQRDisplayView(View):
     def get_qr_encoder(self):
         raise Exception("Must implement in the child class")
