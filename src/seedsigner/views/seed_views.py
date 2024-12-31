@@ -1231,9 +1231,9 @@ class SeedBIP85InvalidChildIndexView(View):
     BIP-352: Silent Payments
 ****************************************************************************"""
 class SeedBIP352SilentPaymentsOptionsView(View):
-    GENERATE_SP_ADDRESS = "Generate payment addr"
-    EXPORT_SIGNING_PUBKEY = "Export signing pubkey"
-    EXPORT_SCANNING_PRIVKEY = "Export scanning privkey"
+    GENERATE_SP_ADDRESS = ButtonOption("Generate payment addr")
+    EXPORT_SIGNING_PUBKEY = ButtonOption("Export signing pubkey")
+    EXPORT_SCANNING_PRIVKEY = ButtonOption("Export scanning privkey")
 
     def __init__(self, seed_num: int):
         super().__init__()
@@ -1252,6 +1252,7 @@ class SeedBIP352SilentPaymentsOptionsView(View):
             title="Silent Payments",
             button_data=button_data,
             is_button_text_centered=False,
+            is_bottom_list=True,
         )
 
         if selected_menu_num == RET_CODE__BACK_BUTTON:
@@ -1271,7 +1272,7 @@ class SeedBIP352SilentPaymentsOptionsView(View):
 
 
 class SeedBIP352GeneratePaymentAddressView(View):
-    EXPORT_VIA_QR_CODE = "Export via QR code"
+    EXPORT_VIA_QR_CODE = ButtonOption("Export via QR code")
 
     def __init__(self, seed_num: int):
         super().__init__()

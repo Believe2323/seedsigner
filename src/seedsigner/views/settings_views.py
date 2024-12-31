@@ -52,7 +52,7 @@ class SettingsMenuView(View):
             title = _("Advanced")
 
             # Set up the next nested level of menuing
-            button_data.append(("Experimental / Edge", None, None, None, SeedSignerIconConstants.CHEVRON_RIGHT))
+            button_data.append(ButtonOption("Experimental / Edge", right_icon_name=SeedSignerIconConstants.CHEVRON_RIGHT))
             next_destination = Destination(SettingsMenuView, view_args={"visibility": SettingsConstants.VISIBILITY__EXPERIMENTAL})
         
         elif self.visibility == SettingsConstants.VISIBILITY__EXPERIMENTAL:
