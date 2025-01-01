@@ -576,7 +576,9 @@ class SeedBIP352GeneratePaymentAddressScreen(ButtonListScreen):
 
         self.components.append(FormattedAddress(
             address=self.payment_address,
-            screen_y=self.top_nav.height + GUIConstants.COMPONENT_PADDING,
+            font_size=GUIConstants.get_body_font_size() + 4,
+            line_spacing=GUIConstants.BODY_LINE_SPACING - 2,
+            screen_y=self.top_nav.height,
         ))
 
 
